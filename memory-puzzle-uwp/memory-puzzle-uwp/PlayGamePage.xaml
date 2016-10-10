@@ -1,13 +1,28 @@
 ﻿<Page
-    x:Class="memory_puzzle_uwp.MainPage"
+    x:Class="memory_puzzle_uwp.PlayGamePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:memory_puzzle_uwp"
+    xmlns:models="using:memory_puzzle_uwp.Models"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    
+    <Page.Resources>
+        <CollectionViewSource x:Name="ImageList" />
+        <DataTemplate x:Name="ImageGridViewTemplate" x:DataType="models:ImageModel">
+            <StackPanel Orientation="Vertical" Width="75" Height="75" Margin="10,10">
+                <Image x:Name="Image" 
+                       Grid.ColumnSpan="2" 
+                       HorizontalAlignment="Left" 
+                       Height="75" 
+                       VerticalAlignment="Top" 
+                       Width="75"
+                       Margin="4"
+                       Source="{Binding Path}"/>
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -30,7 +45,13 @@
                    VerticalAlignment="Center"
                    Style="{ThemeResource TitleTextBlockStyle}" 
                    Grid.Column="1"/>
-
+        <GridView ItemsSource="{x:Bind ImageList.View}"
+                  ItemTemplate="{StaticResource ImageGridViewTemplate}"
+                  Grid.Row="1"
+                  Grid.ColumnSpan="2">
+        </GridView>
+        <StackPanel x:Name="loaderRing" Margin="0,25,0,0" Grid.Row="2" Padding="0,25,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <local:TopNavMenu x:Name="TopNavMenu" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+        
     </Grid>
 </Page>

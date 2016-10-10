@@ -26,5 +26,10 @@ namespace memory_puzzle_uwp
         {
             this.InitializeComponent();
         }
+
+        private void TopNavMenuClicked(object sender, RoutedEventArgs e)
+        {
+            TopNavMenu.TopNavSplitView.IsPaneOpen = !TopNavMenu.TopNavSplitView.IsPaneOpen;
+        }
     }
 }
