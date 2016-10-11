@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using memory_puzzle_uwp.ViewModels;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace memory_puzzle_uwp.Models
@@ -14,7 +15,7 @@ namespace memory_puzzle_uwp.Models
     /// <summary>
     /// Puzzle model is controlling the board used in the current game session
     /// </summary>
-    public class PuzzleViewModel
+    public class PuzzleViewModel : NotificationBase<PuzzleModel>
     {
         const string IMAGE_FOLDER_NAME = "Images";
 
@@ -27,28 +28,28 @@ namespace memory_puzzle_uwp.Models
         //The image names for the current game
         string[] requiredImageNames;
 
-        //Hold the board width
-        private int boardWidth = 5;
-
-        //No public set as the board size can not change runtime
         public int BoardWidth
         {
-            get { return boardWidth; }
+            get { return This.BoardWidth; }
+            set { SetProperty(This.BoardWidth, value, () => This.BoardWidth = value); }
         }
 
-        private int boardHeight = 5;
-                
         public int BoardHeight
         {
-            get { return boardHeight; }
+            get { return This.BoardHeight; }
+            set { SetProperty(This.BoardHeight, value, () => This.BoardHeight = value); }
         }
-
-        //Hold the collection name for images to use for current puzzle
-        private string collectionName = "default_color";
 
         public string CollectionName
         {
-            get { return collectionName; }
+            get { return This.CollectionName; }
+            set { SetProperty(This.CollectionName, value, () => This.CollectionName = value); }
+        }
+
+        public int Score
+        {
+            get { return This.Score; }
+            set { SetProperty(This.Score, value, () => This.Score = value); }
         }
 
         /// <summary>
@@ -68,18 +69,21 @@ namespace memory_puzzle_uwp.Models
         /// <param name="boardHeight">The new puzzle height</param>
         public PuzzleViewModel(String collectionName, int boardWidth, int boardHeight)
         {
-            this.collectionName = collectionName;
-            this.boardWidth = boardWidth;
-            this.boardHeight = boardHeight;
+            CollectionName = collectionName;
+            BoardWidth = boardWidth;
+            BoardHeight = boardHeight;
 
             imagePair = new int[2] { -1, -1};
             currentPuzzleDict = new Dictionary<int, ImageModel>();
             initPuzzleModel();
         }
 
+        /// <summary>
+        /// Initalize the current game play
+        /// </summary>
         private void initPuzzleModel() {
             //The custom image count
-            int requiredImagesCnt = (boardWidth * boardHeight) / 2;
+            int requiredImagesCnt = (BoardWidth * BoardHeight) / 2;
             requiredImageNames = new string[requiredImagesCnt*2];
             string[] collectionImages = getImageNamesFromFolder();
 
@@ -98,7 +102,7 @@ namespace memory_puzzle_uwp.Models
         /// <returns>String[] with resource names</returns>
         private string[] getImageNamesFromFolder()
         {
-            return Directory.GetFiles(string.Format("{0}/{1}/", IMAGE_FOLDER_NAME, collectionName), "*.png");
+            return Directory.GetFiles(string.Format("{0}/{1}/", IMAGE_FOLDER_NAME, CollectionName), "*.png");
         }
 
         /// <summary>
@@ -121,7 +125,7 @@ namespace memory_puzzle_uwp.Models
             int iCnt = 0;
             foreach (string imageName in requiredImageNames) {
                 im = new ImageModel();
-                im.Collection = collectionName;
+                im.Collection = CollectionName;
                 im.Path = imageName;
                 im.RowLocation = imageName;
                 im.IsFound = false;
@@ -142,7 +146,7 @@ namespace memory_puzzle_uwp.Models
         /// </summary>
         /// <param name="imageId">The integer id as defined on initialization</param>
         /// <returns>true if image is revield</returns>
-        public bool isImageFound(int imageId) {
+        public bool IsImageFound(int imageId) {
             if (currentPuzzleDict.ContainsKey(imageId))
             {
                 ImageModel im = currentPuzzleDict[imageId];

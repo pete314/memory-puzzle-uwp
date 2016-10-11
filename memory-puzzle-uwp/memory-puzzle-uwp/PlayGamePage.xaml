@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:memory_puzzle_uwp"
     xmlns:models="using:memory_puzzle_uwp.Models"
+    xmlns:view_models="using:memory_puzzle_uwp.ViewModels"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
@@ -30,6 +31,7 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -40,18 +42,56 @@
         <TextBlock HorizontalAlignment="Left"
                    VerticalAlignment="Center"
                    Tapped="TopNavMenuClicked"
-                   Margin="0,0,10,0"
+                   Margin="10"
                    FontFamily="Quartz MS"
                    Style="{ThemeResource TitleTextBlockStyle}" 
-                   Text="MENU ¦ "
+                   Text="MENU"
                    />
-        <TextBlock Text=" Memory puzzle" 
+        <TextBlock Text="New game" 
+                   HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    Style="{ThemeResource TitleTextBlockStyle}" 
                    Grid.Column="1"/>
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Score:" 
+                       VerticalAlignment="Center"
+                       Style="{ThemeResource TitleTextBlockStyle}" FontWeight="Bold" />
+                <TextBlock Grid.Row="0" Grid.Column="1" 
+                       HorizontalAlignment="Left"
+                           VerticalAlignment="Center"
+                       Style="{ThemeResource TitleTextBlockStyle}">
+                    <TextBlock.Text>
+                        <Binding Source="{x:Bind  }" Path="Name" UpdateSourceTrigger="PropertyChanged"/>
+                    </TextBlock.Text>
+                </TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="2" Text="Time:" 
+                           HorizontalAlignment="Right"
+                       VerticalAlignment="Center"
+                       Style="{ThemeResource TitleTextBlockStyle}" FontWeight="Bold" />
+                <TextBlock Grid.Row="0" Grid.Column="3"
+                           HorizontalAlignment="Right"
+                       VerticalAlignment="Center"
+                       Style="{ThemeResource TitleTextBlockStyle}" Margin="0,0,10,0">
+                    <TextBlock.Text>
+                        <Binding Source="{x:Bind  }" Path="Name" UpdateSourceTrigger="PropertyChanged"/>
+                    </TextBlock.Text>
+                </TextBlock>
+            </Grid>
+        </StackPanel>
         <GridView ItemsSource="{x:Bind ImageList.View}"
                   ItemTemplate="{StaticResource ImageGridViewTemplate}"
-                  Grid.Row="1"
+                  Grid.Row="2"
                   Grid.ColumnSpan="2">
         </GridView>
         

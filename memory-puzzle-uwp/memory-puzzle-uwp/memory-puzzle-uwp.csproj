@@ -99,6 +99,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\ImageModel.cs" />
+    <Compile Include="Models\PuzzleModel.cs" />
     <Compile Include="ViewModels\PuzzleViewModel.cs" />
     <Compile Include="PlayGamePage.xaml.cs">
       <DependentUpon>PlayGamePage.xaml</DependentUpon>

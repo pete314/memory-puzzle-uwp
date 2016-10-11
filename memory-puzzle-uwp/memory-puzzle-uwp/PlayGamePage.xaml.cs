@@ -24,7 +24,7 @@ namespace memory_puzzle_uwp
     /// </summary>
     public sealed partial class PlayGamePage : Page
     {
-        PuzzleViewModel puzzleModel;
+        public PuzzleViewModel puzzleModel { get; set; }
         ObservableCollection<ImageModel> images;
 
         /// <summary>
@@ -36,7 +36,6 @@ namespace memory_puzzle_uwp
             puzzleModel = new PuzzleViewModel();
             images = new ObservableCollection<ImageModel>();
             ImageList.Source = images;
-
             tryLoadImages();
         }
 
