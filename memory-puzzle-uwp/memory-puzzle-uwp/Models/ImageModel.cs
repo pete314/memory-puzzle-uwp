@@ -12,6 +12,7 @@ namespace memory_puzzle_uwp.Models
     /// </summary>
     public class ImageModel
     {
+        const string HIDDEN_PATH = "/Images/hidden.png";
         private string collection;
 
         public string Collection
@@ -28,15 +29,17 @@ namespace memory_puzzle_uwp.Models
             set { imageId = value; }
         }
 
+        public string ImageIdStr { get { return "" + imageId; }}
+
         private string path;
             
         public string Path
         {
-            get { return path; }
+            get { return isVisible || isFound ? path : HIDDEN_PATH; }
             set { path = value; }
         }
 
-        private bool isVisible;
+        private bool isVisible = false;
 
         public bool IsVisible
         {
@@ -44,7 +47,7 @@ namespace memory_puzzle_uwp.Models
             set { isVisible = value; }
         }
 
-        private bool isFound;
+        private bool isFound = false;
 
         public bool IsFound
         {

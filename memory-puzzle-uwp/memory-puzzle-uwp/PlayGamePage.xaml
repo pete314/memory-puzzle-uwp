@@ -11,15 +11,19 @@
     <Page.Resources>
         <CollectionViewSource x:Name="ImageList" />
         <DataTemplate x:Name="ImageGridViewTemplate" x:DataType="models:ImageModel">
-            <StackPanel Orientation="Vertical" Width="75" Height="75" Margin="10,10">
-                <Image x:Name="Image" 
-                       Grid.ColumnSpan="2" 
+            <StackPanel Orientation="Vertical" Width="75" Height="75" Margin="10" 
+                       Tapped="PuzzleImage_Tapped">
+                <TextBlock x:Name="ImageIdHolder" 
+                           Visibility="Collapsed" 
+                           Text="{x:Bind ImageIdStr}" />
+
+                <Image x:Name="PuzzleImage" 
+                       Grid.ColumnSpan="1" 
                        HorizontalAlignment="Left" 
                        Height="75" 
                        VerticalAlignment="Top" 
                        Width="75"
-                       Margin="4"
-                       Source="{Binding Path}"/>
+                       Source="{x:Bind Path}"/>
             </StackPanel>
         </DataTemplate>
     </Page.Resources>
@@ -50,6 +54,8 @@
                   Grid.Row="1"
                   Grid.ColumnSpan="2">
         </GridView>
+        
+        
         <StackPanel x:Name="loaderRing" Margin="0,25,0,0" Grid.Row="2" Padding="0,25,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <local:TopNavMenu x:Name="TopNavMenu" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
         

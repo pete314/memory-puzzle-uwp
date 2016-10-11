@@ -99,7 +99,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\ImageModel.cs" />
-    <Compile Include="Models\PuzzleModel.cs" />
+    <Compile Include="ViewModels\PuzzleViewModel.cs" />
     <Compile Include="PlayGamePage.xaml.cs">
       <DependentUpon>PlayGamePage.xaml</DependentUpon>
     </Compile>
@@ -667,6 +667,7 @@
     <Content Include="Images\default_color\worldwide.png" />
     <Content Include="Images\default_color\zoom-in.png" />
     <Content Include="Images\default_color\zoom-out.png" />
+    <Content Include="Images\hidden.png" />
     <Content Include="Images\pokemon_color\abra.png" />
     <Content Include="Images\pokemon_color\action-1.png" />
     <Content Include="Images\pokemon_color\action.png" />

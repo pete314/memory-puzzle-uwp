@@ -24,7 +24,7 @@ namespace memory_puzzle_uwp
     /// </summary>
     public sealed partial class PlayGamePage : Page
     {
-        PuzzleModel puzzleModel;
+        PuzzleViewModel puzzleModel;
         ObservableCollection<ImageModel> images;
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace memory_puzzle_uwp
         public PlayGamePage()
         {
             this.InitializeComponent();
-            puzzleModel = new PuzzleModel();
+            puzzleModel = new PuzzleViewModel();
             images = new ObservableCollection<ImageModel>();
             ImageList.Source = images;
 
@@ -56,6 +56,26 @@ namespace memory_puzzle_uwp
         private void TopNavMenuClicked(object sender, RoutedEventArgs e)
         {
             TopNavMenu.TopNavSplitView.IsPaneOpen = !TopNavMenu.TopNavSplitView.IsPaneOpen;
+        }
+
+        private void PuzzleImage_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            int imageId = ExtractImageId((Panel)sender);
+            puzzleModel.ImageTapped(imageId, ref images);
+        }
+
+        /// <summary>
+        /// Extract the id from hidden textbox
+        /// </summary>
+        /// <param name="sender">Stack panel from xaml ui datatempalte</param>
+        /// <returns></returns>
+        private int ExtractImageId(Panel sender) {
+            foreach (var element in ((Panel)sender).Children)
+            {
+                if (element is TextBlock)
+                    return Int32.Parse(((TextBlock)element).Text);
+            }
+            return -1;
         }
     }
 }
