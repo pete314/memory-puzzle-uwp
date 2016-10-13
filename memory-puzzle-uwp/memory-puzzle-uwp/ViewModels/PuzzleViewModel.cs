@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using memory_puzzle_uwp.Helpers;
 using memory_puzzle_uwp.ViewModels;
 using Windows.UI.Xaml.Media.Imaging;
 
@@ -17,8 +19,8 @@ namespace memory_puzzle_uwp.Models
     /// </summary>
     public class PuzzleViewModel : NotificationBase<PuzzleModel>
     {
-        const string IMAGE_FOLDER_NAME = "Images";
-
+        
+        private Stopwatch stopWatch = new Stopwatch();
         //The image pair for the comparison
         private int[] imagePair;
 
@@ -46,10 +48,16 @@ namespace memory_puzzle_uwp.Models
             set { SetProperty(This.CollectionName, value, () => This.CollectionName = value); }
         }
 
-        public int Score
+        public string Score
         {
             get { return This.Score; }
             set { SetProperty(This.Score, value, () => This.Score = value); }
+        }
+
+        public string Time
+        {
+            get { return This.Time; }
+            set { SetProperty(This.Time, value, () => This.Time = value); }
         }
 
         /// <summary>
@@ -85,41 +93,16 @@ namespace memory_puzzle_uwp.Models
             //The custom image count
             int requiredImagesCnt = (BoardWidth * BoardHeight) / 2;
             requiredImageNames = new string[requiredImagesCnt*2];
-            string[] collectionImages = getImageNamesFromFolder();
+            string[] collectionImages = SCollectionHelper.getImageNamesFromFolder("default");
 
             //Copy the required amount of unique images
             Array.Copy(collectionImages, 0, requiredImageNames, 0, requiredImagesCnt);
             Array.Copy(collectionImages, 0, requiredImageNames, requiredImagesCnt, requiredImagesCnt);
-            
+
             //Shuffle the images
-            shuffleBoard(ref requiredImageNames);
+            SCollectionHelper.shuffleBoard(ref requiredImageNames);
         }
-
-
-        /// <summary>
-        /// Load image names from folder for current game
-        /// </summary>
-        /// <returns>String[] with resource names</returns>
-        private string[] getImageNamesFromFolder()
-        {
-            return Directory.GetFiles(string.Format("{0}/{1}/", IMAGE_FOLDER_NAME, CollectionName), "*.png");
-        }
-
-        /// <summary>
-        /// Shuffle image load order
-        /// </summary>
-        /// <param name="folderImages"></param>
-        private void shuffleBoard(ref string[] folderImages) {
-            Random rand = new Random();
-            for (int i = folderImages.Length - 1; i > 0; i--)
-            {
-                int index = rand.Next(i + 1);
-                string a = folderImages[index];
-                folderImages[index] = folderImages[i];
-                folderImages[i] = a;
-            }
-        }
-
+        
         public bool loadPuzzleBoard(ref ObservableCollection<ImageModel> images) {
             ImageModel im;
             int iCnt = 0;
@@ -138,6 +121,8 @@ namespace memory_puzzle_uwp.Models
                 images.Add(im);
             }
 
+            //Start the game timer
+            stopWatch.Start();
             return true;
         }
 
@@ -180,6 +165,7 @@ namespace memory_puzzle_uwp.Models
                 //Check if there is pair
                 if (im2.Path.Equals(im.Path) && im2.ImageId != im.ImageId)
                 {
+                    AddScore();
                     im2.IsFound = true;
                     im.IsFound = true;
                     //Update observable collection
@@ -213,6 +199,17 @@ namespace memory_puzzle_uwp.Models
                 im.IsVisible = true;
                 currentImages[im.ImageId] = im;
             }
+        }
+
+        /// <summary>
+        /// Increment the current score
+        /// </summary>
+        private void AddScore() {
+            long elapsedMS = stopWatch.ElapsedMilliseconds;
+            int currentScore = (requiredImageNames.Length * 1000) / (int)(elapsedMS / 1000);
+            int totalScore = Int32.Parse(Score) + currentScore;
+
+            Score = totalScore.ToString();
         }
     }
 }

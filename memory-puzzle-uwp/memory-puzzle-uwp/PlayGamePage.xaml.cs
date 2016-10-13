@@ -24,7 +24,7 @@ namespace memory_puzzle_uwp
     /// </summary>
     public sealed partial class PlayGamePage : Page
     {
-        public PuzzleViewModel puzzleModel { get; set; }
+        public PuzzleViewModel PuzzleModel { get; set; }
         ObservableCollection<ImageModel> images;
 
         /// <summary>
@@ -32,23 +32,26 @@ namespace memory_puzzle_uwp
         /// </summary>
         public PlayGamePage()
         {
+            PuzzleModel = new PuzzleViewModel();
+            this.DataContext = this;
             this.InitializeComponent();
-            puzzleModel = new PuzzleViewModel();
+
             images = new ObservableCollection<ImageModel>();
             ImageList.Source = images;
             tryLoadImages();
         }
 
+        /// <summary>
+        /// Load images with progress ring
+        /// </summary>
         public void tryLoadImages()
         {
-            //Show loading
             ProgressRing progressRing1 = new ProgressRing();
             progressRing1.IsActive = true;
             loaderRing.Children.Add(progressRing1);
 
-            puzzleModel.loadPuzzleBoard(ref images);
+            PuzzleModel.loadPuzzleBoard(ref images);
 
-            //@todo: Should be moved
             progressRing1.IsActive = false;
         }
 
@@ -60,7 +63,7 @@ namespace memory_puzzle_uwp
         private void PuzzleImage_Tapped(object sender, TappedRoutedEventArgs e)
         {
             int imageId = ExtractImageId((Panel)sender);
-            puzzleModel.ImageTapped(imageId, ref images);
+            PuzzleModel.ImageTapped(imageId, ref images);
         }
 
         /// <summary>

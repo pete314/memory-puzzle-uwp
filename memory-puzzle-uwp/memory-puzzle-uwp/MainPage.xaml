@@ -3,11 +3,59 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:memory_puzzle_uwp"
+    xmlns:models="using:memory_puzzle_uwp.Models"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    
+
+    <Page.Resources>
+        <CollectionViewSource x:Name="CollectionList" />
+        <DataTemplate x:Name="GameCollectionGridViewTemplate" x:DataType="models:CollectionModel">
+            <StackPanel x:Name="CollectionPanel" Orientation="Vertical" Width="75" Height="75" Margin="10" 
+                       Tapped="CollectionPanel_Tapped">
+                <TextBlock x:Name="CollectionIdHolder" 
+                           Visibility="Collapsed" 
+                           Text="{x:Bind CollectionName}" />
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Vertical" Height="64" Width="64">
+                        <Image x:Name="CollImg_1" 
+                           Grid.ColumnSpan="1" 
+                           HorizontalAlignment="Left" 
+                           Height="32" 
+                           VerticalAlignment="Top"
+                           Source="{x:Bind SampleImgPath1}"/>
+                        <Image x:Name="CollImg_2" 
+                           Grid.ColumnSpan="1" 
+                           HorizontalAlignment="Left" 
+                           Height="32" 
+                           VerticalAlignment="Top"
+                           Source="{x:Bind SampleImgPath2}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" Height="64" Width="64">
+                        <StackPanel Orientation="Vertical" Height="64" Width="64">
+                            <Image x:Name="CollImg_3" 
+                               Grid.ColumnSpan="1" 
+                               HorizontalAlignment="Left" 
+                               Height="32" 
+                               VerticalAlignment="Top"
+                               Source="{x:Bind SampleImgPath3}"/>
+                            <Image x:Name="CollImg_4" 
+                               Grid.ColumnSpan="1" 
+                               HorizontalAlignment="Left" 
+                               Height="32" 
+                               VerticalAlignment="Top"
+                               Source="{x:Bind SampleImgPath4}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel><!-- End collection samples-->
+                <StackPanel Orientation="Vertical" Visibility="Collapsed">
+                    
+                </StackPanel><!--End size selection-->
+                <Button Content="Start" Visibility="Collapsed"></Button>
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -30,7 +78,24 @@
                    VerticalAlignment="Center"
                    Style="{ThemeResource TitleTextBlockStyle}" 
                    Grid.Column="1"/>
-
+        <StackPanel Grid.Row="1" Grid.Column="1" Margin="10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+            </Grid>
+            <TextBlock Text="Puzzle collections" />
+            <GridView ItemsSource="{x:Bind CollectionList.View}"
+                  ItemTemplate="{StaticResource GameCollectionGridViewTemplate}"
+                  Grid.Row="2"
+                  Grid.ColumnSpan="2">
+            </GridView>
+        </StackPanel>
         <local:TopNavMenu x:Name="TopNavMenu" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
     </Grid>
 </Page>

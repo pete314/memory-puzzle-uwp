@@ -9,7 +9,7 @@ namespace memory_puzzle_uwp.Models
     public class PuzzleModel
     {
         //Hold the board width
-        private int boardWidth = 5;
+        private int boardWidth = 6;
         
         public int BoardWidth
         {
@@ -17,7 +17,7 @@ namespace memory_puzzle_uwp.Models
             set { boardWidth = value; }
         }
 
-        private int boardHeight = 5;
+        private int boardHeight = 4;
 
         public int BoardHeight
         {
@@ -35,12 +35,20 @@ namespace memory_puzzle_uwp.Models
         }
 
         //Holds the current score
-        private int score = 0;
+        private string score = "0";
 
-        public int Score
+        public string Score
         {
             get { return score; }
             set { score = value; }
+        }
+
+        private string time = "0";
+
+        public string Time
+        {
+            get { return time; }
+            set { time = value; }
         }
 
     }

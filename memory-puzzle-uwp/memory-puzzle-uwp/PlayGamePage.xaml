@@ -67,26 +67,24 @@
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Score:" 
                        VerticalAlignment="Center"
                        Style="{ThemeResource TitleTextBlockStyle}" FontWeight="Bold" />
-                <TextBlock Grid.Row="0" Grid.Column="1" 
+                <TextBlock x:Name="puzzleScore" Grid.Row="0" Grid.Column="1" 
                        HorizontalAlignment="Left"
                            VerticalAlignment="Center"
-                       Style="{ThemeResource TitleTextBlockStyle}">
-                    <TextBlock.Text>
-                        <Binding Source="{x:Bind  }" Path="Name" UpdateSourceTrigger="PropertyChanged"/>
-                    </TextBlock.Text>
-                </TextBlock>
+                       Style="{ThemeResource TitleTextBlockStyle}"
+                           Text="{Binding Path=PuzzleModel.Score}" />
+
                 <TextBlock Grid.Row="0" Grid.Column="2" Text="Time:" 
                            HorizontalAlignment="Right"
                        VerticalAlignment="Center"
                        Style="{ThemeResource TitleTextBlockStyle}" FontWeight="Bold" />
-                <TextBlock Grid.Row="0" Grid.Column="3"
+                
+                <TextBlock x:Name="puzzleTime" Grid.Row="0" Grid.Column="3"
                            HorizontalAlignment="Right"
-                       VerticalAlignment="Center"
-                       Style="{ThemeResource TitleTextBlockStyle}" Margin="0,0,10,0">
-                    <TextBlock.Text>
-                        <Binding Source="{x:Bind  }" Path="Name" UpdateSourceTrigger="PropertyChanged"/>
-                    </TextBlock.Text>
-                </TextBlock>
+                           VerticalAlignment="Center"
+                           Style="{ThemeResource TitleTextBlockStyle}" 
+                           Margin="0,0,10,0"
+                           Text="{Binding Path=PuzzleModel.Time}"/>
+
             </Grid>
         </StackPanel>
         <GridView ItemsSource="{x:Bind ImageList.View}"
@@ -95,9 +93,7 @@
                   Grid.ColumnSpan="2">
         </GridView>
         
-        
         <StackPanel x:Name="loaderRing" Margin="0,25,0,0" Grid.Row="2" Padding="0,25,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <local:TopNavMenu x:Name="TopNavMenu" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
-        
     </Grid>
 </Page>
