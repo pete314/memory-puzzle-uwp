@@ -44,7 +44,7 @@
                    Margin="10"
                    FontFamily="Quartz MS"
                    Style="{ThemeResource TitleTextBlockStyle}" 
-                   Text="MENU | "
+                   Text="MENU >> "
                    />
         <TextBlock Text="New game" 
                    HorizontalAlignment="Center"

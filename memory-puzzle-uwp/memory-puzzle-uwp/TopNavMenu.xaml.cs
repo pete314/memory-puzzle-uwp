@@ -38,5 +38,10 @@ namespace memory_puzzle_uwp
         {
             ((Frame)Window.Current.Content).Navigate(typeof(PlayGamePage), new PuzzleModel());
         }
+        private void SettingsPage(object sender, RoutedEventArgs e)
+        {
+            ((Frame)Window.Current.Content).Navigate(typeof(Settings));
+        }
+
     }
 }

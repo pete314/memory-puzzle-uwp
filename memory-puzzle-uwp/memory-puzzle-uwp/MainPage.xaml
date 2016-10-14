@@ -72,7 +72,7 @@
                    Margin="0,0,10,0"
                    FontFamily="Quartz MS"
                    Style="{ThemeResource TitleTextBlockStyle}" 
-                   Text="MENU ¦ "
+                   Text="MENU >> "
                    />
         <TextBlock Text=" Memory puzzle" 
                    VerticalAlignment="Center"

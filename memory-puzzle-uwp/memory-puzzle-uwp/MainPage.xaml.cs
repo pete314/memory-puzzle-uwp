@@ -8,6 +8,7 @@ using memory_puzzle_uwp.Models;
 using memory_puzzle_uwp.ViewModels;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -28,6 +29,7 @@ namespace memory_puzzle_uwp
         ObservableCollection<CollectionModel> collectionList;
         MainViewModel mainViewModel;
         public PuzzleModel puzzleModel { get; set; }
+
         public MainPage()
         {
             puzzleModel = new PuzzleModel();
@@ -37,6 +39,7 @@ namespace memory_puzzle_uwp
             collectionList = new ObservableCollection<CollectionModel>();
             mainViewModel.LoadCollections(ref collectionList);
             CollectionList.Source = collectionList;
+            checkUsername();
         }
 
         /// <summary>
@@ -48,7 +51,37 @@ namespace memory_puzzle_uwp
         {
             TopNavMenu.TopNavSplitView.IsPaneOpen = !TopNavMenu.TopNavSplitView.IsPaneOpen;
         }
-        
+
+        /// <summary>
+        /// Check username in local storage
+        /// </summary>
+        private void checkUsername() {
+            var localStorage = ApplicationData.Current.LocalSettings;
+            if (!localStorage.Values.ContainsKey("username"))
+                routeToSettingsDialog();
+        }
+
+        /// <summary>
+        /// Create and show dialog for settings
+        /// </summary>
+        private async void routeToSettingsDialog() {
+            var dialog = new Windows.UI.Popups.MessageDialog(
+                "Welcome to Memory Puzzle!\nIt seams you did not set a username yet. Please visit the settings and set a username.",
+                "Settings");
+
+            dialog.Commands.Add(new Windows.UI.Popups.UICommand("Set username") { Id = 0 });
+            dialog.Commands.Add(new Windows.UI.Popups.UICommand("Remind me later") { Id = 1 });
+
+            dialog.DefaultCommandIndex = 0;
+            dialog.CancelCommandIndex = 1;
+
+            var result = await dialog.ShowAsync();
+
+            if (0 == (int)result.Id)
+            {
+                ((Frame)Window.Current.Content).Navigate(typeof(Settings));
+            }
+        }
 
         /// <summary>
         /// Handle collection tapped event from collection list

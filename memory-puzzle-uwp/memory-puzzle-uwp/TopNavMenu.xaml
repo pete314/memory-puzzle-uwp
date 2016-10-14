@@ -22,6 +22,10 @@
                             Click="NavigateNewGamePage" 
                             HorizontalAlignment="Stretch" 
                             HorizontalContentAlignment="Left" />
+                <Button Content="Settings" 
+                            Click="SettingsPage" 
+                            HorizontalAlignment="Stretch" 
+                            HorizontalContentAlignment="Left" />
             </StackPanel>
         </SplitView.Pane>
     </SplitView>
