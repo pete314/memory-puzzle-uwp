@@ -93,5 +93,31 @@
         </GridView>
         <StackPanel x:Name="loaderRing" Margin="0,25,0,0" Grid.Row="2" Padding="0,25,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <local:TopNavMenu x:Name="TopNavMenu" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+        <!--<Popup x:Name="GameResultsPopup" 
+               Grid.Row="1"
+               Grid.ColumnSpan="2"
+               IsOpen="True"
+               IsLightDismissEnabled="True"  
+               Width="320"
+               Margin="65"
+               VerticalAlignment="Center"
+               HorizontalAlignment="Center"/>
+        <Popup.ChildTransitions>
+                <TransitionCollection>
+                    <PaneThemeTransition Edge="Left" />
+                </TransitionCollection>
+            </Popup.ChildTransitions>
+            <StackPanel Orientation="Vertical" Background="{ThemeResource FlyoutBackgroundThemeBrush}" >
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Final score:"/>
+                    <TextBlock x:Name="FinalScore" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Completed in:"/>
+                    <TextBlock x:Name="FinalTime" />
+                </StackPanel>
+                <Button x:Name="ReturnHome" Tapped="ReturnHome_Tapped" Content="OK"/>
+            </StackPanel>
+        </Popup>-->
     </Grid>
 </Page>

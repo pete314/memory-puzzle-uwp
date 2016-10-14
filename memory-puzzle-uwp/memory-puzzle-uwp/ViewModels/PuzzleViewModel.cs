@@ -24,11 +24,30 @@ namespace memory_puzzle_uwp.Models
         //The image pair for the comparison
         private int[] imagePair;
 
+        private int foundImagesCnt = 0;
+
         //Holds the images in a dictionary for fast access
         private Dictionary<int, ImageModel> currentPuzzleDict;
 
         //The image names for the current game
         string[] requiredImageNames;
+
+        private bool isComplete;
+
+        public bool IsComplete
+        {
+            get { return isComplete; }
+            set { isComplete = value; }
+        }
+
+        private string elapsedSecods;
+
+        public string ElapsedSeconds
+        {
+            get { return elapsedSecods; }
+            set { elapsedSecods = value; }
+        }
+
 
         public int BoardSize
         {
@@ -98,7 +117,7 @@ namespace memory_puzzle_uwp.Models
         private void initPuzzleModel() {
             //The custom image count
             requiredImageNames = new string[BoardSize*2];
-            string[] collectionImages = SCollectionHelper.getImageNamesFromFolder("Images/default");
+            string[] collectionImages = SCollectionHelper.getImageNamesFromFolder(CollectionName);
 
             //Copy the required amount of unique images
             Array.Copy(collectionImages, 0, requiredImageNames, 0, BoardSize);
@@ -155,7 +174,6 @@ namespace memory_puzzle_uwp.Models
             if (im.IsFound)
                 return;//If the user taps the same image twice, do nothing
             
-
             if (imagePair[0] == -1)
             {
                 imagePair[0] = im.ImageId;
@@ -171,6 +189,12 @@ namespace memory_puzzle_uwp.Models
                 if (im2.Path.Equals(im.Path) && im2.ImageId != im.ImageId)
                 {
                     AddScore();
+                    foundImagesCnt += 2;
+                    if (foundImagesCnt == currentPuzzleDict.Count) {
+                        IsComplete = true;
+                        stopWatch.Stop();
+                        ElapsedSeconds = ((int)stopWatch.ElapsedMilliseconds / 1000).ToString() + "sec";
+                    }
                     im2.IsFound = true;
                     im.IsFound = true;
                     //Update observable collection

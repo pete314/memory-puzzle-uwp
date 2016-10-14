@@ -76,8 +76,8 @@ namespace memory_puzzle_uwp
         private void FindSelectItem(Panel stackPanel) {
             foreach (var child in stackPanel.Children) {
                 //This is really risky, only possible with current ui (should refactor into selectedIndex)
-                if (child is TextBlock && child.Visibility == Visibility.Collapsed) {
-                    puzzleModel.CollectionName = ((TextBlock)child).Text;
+                if (child is TextBox) {
+                    puzzleModel.CollectionName = ((TextBox)child).Text;
                 }
             }
         }

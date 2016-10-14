@@ -16,7 +16,7 @@
                         Margin="10"
                         BorderThickness="1"
                         Tapped="CollectionPanel_Tapped">
-                <TextBlock x:Name="CollectionPath" 
+                <TextBox x:Name="CollectionPath" 
                            Visibility="Collapsed" 
                            Text="{x:Bind Path}" />
                 <TextBlock x:Name="CollectionName"

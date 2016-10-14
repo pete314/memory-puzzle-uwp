@@ -7,6 +7,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using memory_puzzle_uwp.Models;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -24,29 +25,30 @@ namespace memory_puzzle_uwp
     /// </summary>
     public sealed partial class PlayGamePage : Page
     {
+        private PuzzleModel puzzleModel { get; set; }
         public PuzzleViewModel puzzleViewModel { get; set; }
         ObservableCollection<ImageModel> images;
+
 
         /// <summary>
         /// Page constructor loading all resources
         /// </summary>
         public PlayGamePage()
         {
-            puzzleViewModel = new PuzzleViewModel(new PuzzleModel());
-            this.DataContext = this;
-            this.InitializeComponent();
 
-            images = new ObservableCollection<ImageModel>();
-            ImageList.Source = images;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            PuzzleModel puzzleModel = e.Parameter as PuzzleModel;
+            puzzleModel = e.Parameter as PuzzleModel;
+            if (puzzleModel == null)
+                puzzleModel = new PuzzleModel();
+
             puzzleViewModel = new PuzzleViewModel(puzzleModel);
             this.DataContext = this;
             this.InitializeComponent();
-
+            images = new ObservableCollection<ImageModel>();
+            ImageList.Source = images;
             tryLoadImages();
         }
         /// <summary>
@@ -82,6 +84,35 @@ namespace memory_puzzle_uwp
         {
             int imageId = ExtractImageId((Panel)sender);
             puzzleViewModel.ImageTapped(imageId, ref images);
+            if (puzzleViewModel.IsComplete) {
+                ShowResults();
+            }
+        }
+
+        /// <summary>
+        /// Show game result in runtime dialog box
+        /// </summary>
+        private async void ShowResults() {
+            var dialog = new Windows.UI.Popups.MessageDialog(
+                "Score: " + puzzleViewModel.Score +"\n" +
+                "Time: " + puzzleViewModel.Time ,
+                "Puzzle completed!");
+
+            dialog.Commands.Add(new Windows.UI.Popups.UICommand("Play again") { Id = 0 });
+            dialog.Commands.Add(new Windows.UI.Popups.UICommand("Return home") { Id = 1 });
+
+            dialog.DefaultCommandIndex = 0;
+            dialog.CancelCommandIndex = 1;
+
+            var result = await dialog.ShowAsync();
+
+            if (0 == (int)result.Id)
+            {
+                ((Frame)Window.Current.Content).Navigate(typeof(PlayGamePage), puzzleModel);
+            }
+            else {
+                ((Frame)Window.Current.Content).Navigate(typeof(MainPage));
+            }
         }
 
         /// <summary>
@@ -96,6 +127,11 @@ namespace memory_puzzle_uwp
                     return Int32.Parse(((TextBlock)element).Text);
             }
             return -1;
+        }
+
+        private void ReturnHome_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            ((Frame)Window.Current.Content).Navigate(typeof(MainPage));
         }
     }
 }

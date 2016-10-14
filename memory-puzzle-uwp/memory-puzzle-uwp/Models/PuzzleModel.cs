@@ -18,7 +18,7 @@ namespace memory_puzzle_uwp.Models
         }
 
         //Hold the collection name for images to use for current puzzle
-        private string collectionName = "default";
+        private string collectionName = "Images/default";
 
         public string CollectionName
         {
