@@ -31,7 +31,6 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -45,14 +44,14 @@
                    Margin="10"
                    FontFamily="Quartz MS"
                    Style="{ThemeResource TitleTextBlockStyle}" 
-                   Text="MENU"
+                   Text="MENU | "
                    />
         <TextBlock Text="New game" 
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    Style="{ThemeResource TitleTextBlockStyle}" 
                    Grid.Column="1"/>
-        <StackPanel Grid.Row="1" Grid.Column="1">
+        <StackPanel Grid.Row="1" Grid.Column="1" Margin="10" VerticalAlignment="Top">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -63,7 +62,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                
+
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Score:" 
                        VerticalAlignment="Center"
                        Style="{ThemeResource TitleTextBlockStyle}" FontWeight="Bold" />
@@ -71,28 +70,27 @@
                        HorizontalAlignment="Left"
                            VerticalAlignment="Center"
                        Style="{ThemeResource TitleTextBlockStyle}"
-                           Text="{Binding Path=PuzzleModel.Score}" />
+                           Text="{Binding Path=puzzleViewModel.Score}" />
 
                 <TextBlock Grid.Row="0" Grid.Column="2" Text="Time:" 
                            HorizontalAlignment="Right"
                        VerticalAlignment="Center"
                        Style="{ThemeResource TitleTextBlockStyle}" FontWeight="Bold" />
-                
+
                 <TextBlock x:Name="puzzleTime" Grid.Row="0" Grid.Column="3"
                            HorizontalAlignment="Right"
                            VerticalAlignment="Center"
                            Style="{ThemeResource TitleTextBlockStyle}" 
                            Margin="0,0,10,0"
-                           Text="{Binding Path=PuzzleModel.Time}"/>
-
+                           Text="{Binding Path=puzzleViewModel.Time}"/>
+                
             </Grid>
         </StackPanel>
-        <GridView ItemsSource="{x:Bind ImageList.View}"
-                  ItemTemplate="{StaticResource ImageGridViewTemplate}"
-                  Grid.Row="2"
-                  Grid.ColumnSpan="2">
+        <GridView Margin="10,45" ItemsSource="{x:Bind ImageList.View}"
+                      ItemTemplate="{StaticResource ImageGridViewTemplate}"
+                      Grid.Row="1"
+                      Grid.ColumnSpan="2">
         </GridView>
-        
         <StackPanel x:Name="loaderRing" Margin="0,25,0,0" Grid.Row="2" Padding="0,25,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <local:TopNavMenu x:Name="TopNavMenu" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
     </Grid>

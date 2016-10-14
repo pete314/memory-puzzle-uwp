@@ -29,7 +29,8 @@ namespace memory_puzzle_uwp.ViewModels
                     SampleImgPath2 = collectionImages[random.Next(collectionImages.Length)],
                     SampleImgPath3 = collectionImages[random.Next(collectionImages.Length)],
                     SampleImgPath4 = collectionImages[random.Next(collectionImages.Length)],
-                    CollectionName = collection
+                    Path = collection,
+                    CollectionName = collection.Substring(collection.LastIndexOf('\\') + 1)
                 });
             }
         }

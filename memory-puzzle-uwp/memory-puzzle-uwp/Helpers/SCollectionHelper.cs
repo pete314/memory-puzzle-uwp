@@ -17,7 +17,7 @@ namespace memory_puzzle_uwp.Helpers
         /// <returns>String[] with resource names</returns>
         public static string[] getImageNamesFromFolder(string collectionName)
         {
-            return Directory.GetFiles(string.Format("{0}/{1}/", IMAGE_FOLDER_NAME, collectionName), "*.png");
+            return Directory.GetFiles(collectionName, "*.png");
         }
 
         /// <summary>

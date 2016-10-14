@@ -24,7 +24,7 @@ namespace memory_puzzle_uwp
     /// </summary>
     public sealed partial class PlayGamePage : Page
     {
-        public PuzzleViewModel PuzzleModel { get; set; }
+        public PuzzleViewModel puzzleViewModel { get; set; }
         ObservableCollection<ImageModel> images;
 
         /// <summary>
@@ -32,15 +32,23 @@ namespace memory_puzzle_uwp
         /// </summary>
         public PlayGamePage()
         {
-            PuzzleModel = new PuzzleViewModel();
+            puzzleViewModel = new PuzzleViewModel(new PuzzleModel());
             this.DataContext = this;
             this.InitializeComponent();
 
             images = new ObservableCollection<ImageModel>();
             ImageList.Source = images;
-            tryLoadImages();
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            PuzzleModel puzzleModel = e.Parameter as PuzzleModel;
+            puzzleViewModel = new PuzzleViewModel(puzzleModel);
+            this.DataContext = this;
+            this.InitializeComponent();
+
+            tryLoadImages();
+        }
         /// <summary>
         /// Load images with progress ring
         /// </summary>
@@ -50,20 +58,30 @@ namespace memory_puzzle_uwp
             progressRing1.IsActive = true;
             loaderRing.Children.Add(progressRing1);
 
-            PuzzleModel.loadPuzzleBoard(ref images);
+            puzzleViewModel.loadPuzzleBoard(ref images);
 
             progressRing1.IsActive = false;
         }
 
+        /// <summary>
+        /// Handles top manu tapped event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TopNavMenuClicked(object sender, RoutedEventArgs e)
         {
             TopNavMenu.TopNavSplitView.IsPaneOpen = !TopNavMenu.TopNavSplitView.IsPaneOpen;
         }
 
+        /// <summary>
+        /// Handles image tapped event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PuzzleImage_Tapped(object sender, TappedRoutedEventArgs e)
         {
             int imageId = ExtractImageId((Panel)sender);
-            PuzzleModel.ImageTapped(imageId, ref images);
+            puzzleViewModel.ImageTapped(imageId, ref images);
         }
 
         /// <summary>

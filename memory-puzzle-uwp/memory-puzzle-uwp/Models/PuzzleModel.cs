@@ -9,24 +9,16 @@ namespace memory_puzzle_uwp.Models
     public class PuzzleModel
     {
         //Hold the board width
-        private int boardWidth = 6;
+        private int boardSize = 6;
         
-        public int BoardWidth
+        public int BoardSize
         {
-            get { return boardWidth; }
-            set { boardWidth = value; }
-        }
-
-        private int boardHeight = 4;
-
-        public int BoardHeight
-        {
-            get { return boardHeight; }
-            set { boardHeight = value; }
+            get { return boardSize; }
+            set { boardSize = value; }
         }
 
         //Hold the collection name for images to use for current puzzle
-        private string collectionName = "default_color";
+        private string collectionName = "default";
 
         public string CollectionName
         {

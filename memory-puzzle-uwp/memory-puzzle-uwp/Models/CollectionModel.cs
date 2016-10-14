@@ -51,5 +51,13 @@ namespace memory_puzzle_uwp.Models
             set { collectionName = value; }
         }
 
+        private string path;
+
+        public string Path
+        {
+            get { return path; }
+            set { path = value; }
+        }
+
     }
 }

@@ -8,51 +8,51 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-
     <Page.Resources>
         <CollectionViewSource x:Name="CollectionList" />
         <DataTemplate x:Name="GameCollectionGridViewTemplate" x:DataType="models:CollectionModel">
-            <StackPanel x:Name="CollectionPanel" Orientation="Vertical" Width="75" Height="75" Margin="10" 
-                       Tapped="CollectionPanel_Tapped">
-                <TextBlock x:Name="CollectionIdHolder" 
+            <StackPanel x:Name="CollectionPanel"
+                        Orientation="Vertical" 
+                        Margin="10"
+                        BorderThickness="1"
+                        Tapped="CollectionPanel_Tapped">
+                <TextBlock x:Name="CollectionPath" 
                            Visibility="Collapsed" 
-                           Text="{x:Bind CollectionName}" />
-                <StackPanel Orientation="Horizontal">
-                    <StackPanel Orientation="Vertical" Height="64" Width="64">
+                           Text="{x:Bind Path}" />
+                <TextBlock x:Name="CollectionName"
+                           FontFamily="Sitka Text"
+                           HorizontalAlignment="Center"
+                           Text="{x:Bind CollectionName}" FontSize="16" FontWeight="Bold" TextAlignment="Center" />
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <StackPanel Orientation="Vertical" Height="64" Width="64" HorizontalAlignment="Center">
                         <Image x:Name="CollImg_1" 
                            Grid.ColumnSpan="1" 
-                           HorizontalAlignment="Left" 
+                           HorizontalAlignment="Center" 
                            Height="32" 
                            VerticalAlignment="Top"
                            Source="{x:Bind SampleImgPath1}"/>
                         <Image x:Name="CollImg_2" 
                            Grid.ColumnSpan="1" 
-                           HorizontalAlignment="Left" 
+                           HorizontalAlignment="Center" 
                            Height="32" 
                            VerticalAlignment="Top"
                            Source="{x:Bind SampleImgPath2}"/>
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Height="64" Width="64">
-                        <StackPanel Orientation="Vertical" Height="64" Width="64">
-                            <Image x:Name="CollImg_3" 
-                               Grid.ColumnSpan="1" 
-                               HorizontalAlignment="Left" 
-                               Height="32" 
-                               VerticalAlignment="Top"
-                               Source="{x:Bind SampleImgPath3}"/>
-                            <Image x:Name="CollImg_4" 
-                               Grid.ColumnSpan="1" 
-                               HorizontalAlignment="Left" 
-                               Height="32" 
-                               VerticalAlignment="Top"
-                               Source="{x:Bind SampleImgPath4}"/>
-                        </StackPanel>
+                        <Image x:Name="CollImg_3" 
+                            Grid.ColumnSpan="1" 
+                            HorizontalAlignment="Center" 
+                            Height="32" 
+                            VerticalAlignment="Top"
+                            Source="{x:Bind SampleImgPath3}"/>
+                        <Image x:Name="CollImg_4" 
+                            Grid.ColumnSpan="1" 
+                            HorizontalAlignment="Center" 
+                            Height="32" 
+                            VerticalAlignment="Top"
+                            Source="{x:Bind SampleImgPath4}"/>
                     </StackPanel>
                 </StackPanel><!-- End collection samples-->
-                <StackPanel Orientation="Vertical" Visibility="Collapsed">
-                    
-                </StackPanel><!--End size selection-->
-                <Button Content="Start" Visibility="Collapsed"></Button>
             </StackPanel>
         </DataTemplate>
     </Page.Resources>
@@ -78,7 +78,7 @@
                    VerticalAlignment="Center"
                    Style="{ThemeResource TitleTextBlockStyle}" 
                    Grid.Column="1"/>
-        <StackPanel Grid.Row="1" Grid.Column="1" Margin="10">
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Margin="10">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -89,12 +89,36 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
             </Grid>
-            <TextBlock Text="Puzzle collections" />
+            <TextBlock Text="Puzzle collections" FontFamily="Palatino Linotype" FontSize="18" FontWeight="Bold" FontStyle="Italic" />
             <GridView ItemsSource="{x:Bind CollectionList.View}"
                   ItemTemplate="{StaticResource GameCollectionGridViewTemplate}"
-                  Grid.Row="2"
+                  Grid.Row="1"
                   Grid.ColumnSpan="2">
             </GridView>
+            <StackPanel x:Name="SizeSelectorPanel" 
+                        Orientation="Vertical" 
+                        Visibility="Collapsed" 
+                        Margin="5" 
+                        HorizontalAlignment="Center"
+                        Width="Auto">
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock Text="Puzzle size" FontFamily="Sitka Text" TextAlignment="Center" FontSize="18" FontWeight="Bold"/>
+                </StackPanel>
+                <StackPanel Margin="5" Orientation="Vertical" HorizontalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Tapped="SizeSelectorTBTapped" HorizontalAlignment="Center" Text="14" Margin="4" FontFamily="Segoe UI Black" FontWeight="Bold"/>
+                        <TextBlock Tapped="SizeSelectorTBTapped" HorizontalAlignment="Center" Text="24" Margin="4" FontFamily="Segoe UI Black" FontWeight="Bold"/>
+                        <TextBlock Tapped="SizeSelectorTBTapped" HorizontalAlignment="Center" Text="48" Margin="4" FontFamily="Segoe UI Black" FontWeight="Bold"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock HorizontalAlignment="Center" Text="Custom" Margin="4" FontFamily="Segoe UI Black" FontWeight="ExtraLight" VerticalAlignment="Center"/>
+                        <TextBox x:Name="CustomPuzzleSizeIB" TextChanged="CustomPuzzleSizeIB_TextChanged" HorizontalAlignment="Center" Text="" Margin="4" PlaceholderText="size"/>
+                    </StackPanel>
+                </StackPanel>
+                <Button Tapped="Button_Tapped" Content="Start" Visibility="Visible" HorizontalAlignment="Center"/>
+            </StackPanel>
+            <!--End size selection-->
+
         </StackPanel>
         <local:TopNavMenu x:Name="TopNavMenu" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
     </Grid>

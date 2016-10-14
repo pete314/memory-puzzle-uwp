@@ -30,18 +30,12 @@ namespace memory_puzzle_uwp.Models
         //The image names for the current game
         string[] requiredImageNames;
 
-        public int BoardWidth
+        public int BoardSize
         {
-            get { return This.BoardWidth; }
-            set { SetProperty(This.BoardWidth, value, () => This.BoardWidth = value); }
+            get { return This.BoardSize; }
+            set { SetProperty(This.BoardSize, value, () => This.BoardSize = value); }
         }
-
-        public int BoardHeight
-        {
-            get { return This.BoardHeight; }
-            set { SetProperty(This.BoardHeight, value, () => This.BoardHeight = value); }
-        }
-
+        
         public string CollectionName
         {
             get { return This.CollectionName; }
@@ -73,13 +67,11 @@ namespace memory_puzzle_uwp.Models
         /// Constructor for custom game
         /// </summary>
         /// <param name="collectionName">The image collection name as in ~/Images/</param>
-        /// <param name="boardWidth">The new puzzle width</param>
-        /// <param name="boardHeight">The new puzzle height</param>
-        public PuzzleViewModel(String collectionName, int boardWidth, int boardHeight)
+        /// <param name="boardSize">The new puzzle width</param>
+        public PuzzleViewModel(string collectionName, int boardSize)
         {
             CollectionName = collectionName;
-            BoardWidth = boardWidth;
-            BoardHeight = boardHeight;
+            BoardSize = boardSize;
 
             imagePair = new int[2] { -1, -1};
             currentPuzzleDict = new Dictionary<int, ImageModel>();
@@ -87,17 +79,30 @@ namespace memory_puzzle_uwp.Models
         }
 
         /// <summary>
+        /// Constructor for navigation event
+        /// </summary>
+        /// <param name="puzzleModel"></param>
+        public PuzzleViewModel(PuzzleModel puzzleModel) {
+            CollectionName = puzzleModel.CollectionName;
+            BoardSize = puzzleModel.BoardSize;
+
+            imagePair = new int[2] { -1, -1 };
+            currentPuzzleDict = new Dictionary<int, ImageModel>();
+            initPuzzleModel();
+
+        }
+
+        /// <summary>
         /// Initalize the current game play
         /// </summary>
         private void initPuzzleModel() {
             //The custom image count
-            int requiredImagesCnt = (BoardWidth * BoardHeight) / 2;
-            requiredImageNames = new string[requiredImagesCnt*2];
-            string[] collectionImages = SCollectionHelper.getImageNamesFromFolder("default");
+            requiredImageNames = new string[BoardSize*2];
+            string[] collectionImages = SCollectionHelper.getImageNamesFromFolder("Images/default");
 
             //Copy the required amount of unique images
-            Array.Copy(collectionImages, 0, requiredImageNames, 0, requiredImagesCnt);
-            Array.Copy(collectionImages, 0, requiredImageNames, requiredImagesCnt, requiredImagesCnt);
+            Array.Copy(collectionImages, 0, requiredImageNames, 0, BoardSize);
+            Array.Copy(collectionImages, 0, requiredImageNames, BoardSize, BoardSize);
 
             //Shuffle the images
             SCollectionHelper.shuffleBoard(ref requiredImageNames);

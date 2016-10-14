@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using memory_puzzle_uwp.Models;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -35,7 +36,7 @@ namespace memory_puzzle_uwp
 
         private void NavigateNewGamePage(object sender, RoutedEventArgs e)
         {
-            ((Frame)Window.Current.Content).Navigate(typeof(PlayGamePage));
+            ((Frame)Window.Current.Content).Navigate(typeof(PlayGamePage), new PuzzleModel());
         }
     }
 }
