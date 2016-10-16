@@ -44,7 +44,7 @@ namespace memory_puzzle_uwp.Models
 
         public string ElapsedSeconds
         {
-            get { return elapsedSecods; }
+            get { return elapsedSecods + "sec"; }
             set { elapsedSecods = value; }
         }
 
@@ -127,6 +127,11 @@ namespace memory_puzzle_uwp.Models
             SCollectionHelper.shuffleBoard(ref requiredImageNames);
         }
         
+        /// <summary>
+        /// Initialize the list for xaml
+        /// </summary>
+        /// <param name="images"></param>
+        /// <returns></returns>
         public bool loadPuzzleBoard(ref ObservableCollection<ImageModel> images) {
             ImageModel im;
             int iCnt = 0;
@@ -166,6 +171,7 @@ namespace memory_puzzle_uwp.Models
 
         /// <summary>
         /// Handle the image tapped event from ui
+        /// @todo: refactor into sdmaller chunks
         /// </summary>
         /// <param name="imageId"></param>
         /// <param name="currentImages"></param>
@@ -193,7 +199,8 @@ namespace memory_puzzle_uwp.Models
                     if (foundImagesCnt == currentPuzzleDict.Count) {
                         IsComplete = true;
                         stopWatch.Stop();
-                        ElapsedSeconds = ((int)stopWatch.ElapsedMilliseconds / 1000).ToString() + "sec";
+                        ElapsedSeconds = ((int)stopWatch.ElapsedMilliseconds / 1000).ToString();
+                        storeScore();
                     }
                     im2.IsFound = true;
                     im.IsFound = true;
@@ -239,6 +246,21 @@ namespace memory_puzzle_uwp.Models
             int totalScore = Int32.Parse(Score) + currentScore;
 
             Score = totalScore.ToString();
+        }
+
+        /// <summary>
+        /// Store the score into local storage
+        /// </summary>
+        private void storeScore() {
+            DatabaseHelper db = new DatabaseHelper();
+            db.InsertScore(new ScoreModel()
+            {
+                Score = Int32.Parse(this.Score),
+                Collection = this.CollectionName,
+                Username = null == SHelperUtil.GetLocalStorageValue("username") ? "Not set" : (string)SHelperUtil.GetLocalStorageValue("username"),
+                TotalSeconds = Int32.Parse(this.elapsedSecods),//the private variable does not contain +"sec", just the int
+                PuzzleSize = this.BoardSize
+            });
         }
     }
 }

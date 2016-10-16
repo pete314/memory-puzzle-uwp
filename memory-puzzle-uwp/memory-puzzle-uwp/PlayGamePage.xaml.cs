@@ -121,11 +121,10 @@ namespace memory_puzzle_uwp
         /// <param name="sender">Stack panel from xaml ui datatempalte</param>
         /// <returns></returns>
         private int ExtractImageId(Panel sender) {
-            foreach (var element in ((Panel)sender).Children)
-            {
+            foreach (var element in sender.Children)
                 if (element is TextBlock)
                     return Int32.Parse(((TextBlock)element).Text);
-            }
+
             return -1;
         }
 

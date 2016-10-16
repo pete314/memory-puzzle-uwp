@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using memory_puzzle_uwp.Helpers;
 using memory_puzzle_uwp.Models;
 using memory_puzzle_uwp.ViewModels;
 using Windows.Foundation;
@@ -56,8 +57,7 @@ namespace memory_puzzle_uwp
         /// Check username in local storage
         /// </summary>
         private void checkUsername() {
-            var localStorage = ApplicationData.Current.LocalSettings;
-            if (!localStorage.Values.ContainsKey("username"))
+            if (null == SHelperUtil.GetLocalStorageValue("username"))
                 routeToSettingsDialog();
         }
 
@@ -111,6 +111,7 @@ namespace memory_puzzle_uwp
                 //This is really risky, only possible with current ui (should refactor into selectedIndex)
                 if (child is TextBox) {
                     puzzleModel.CollectionName = ((TextBox)child).Text;
+                    return;
                 }
             }
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using memory_puzzle_uwp.Helpers;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -36,8 +37,7 @@ namespace memory_puzzle_uwp
         private void SaveBtn_Tapped(object sender, TappedRoutedEventArgs e)
         {
             string usrName = UsrNameTB.Text;
-            var localStorage = ApplicationData.Current.LocalSettings;
-            localStorage.Values["username"] = usrName;
+            SHelperUtil.SetLocalStorageValue("username", usrName);
         }
 
         /// <summary>

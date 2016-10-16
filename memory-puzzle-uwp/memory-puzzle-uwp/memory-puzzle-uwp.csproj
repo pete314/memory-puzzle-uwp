@@ -96,12 +96,15 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\SCollectionHelper.cs" />
+    <Compile Include="Helpers\DatabaseHelper.cs" />
+    <Compile Include="Helpers\SHelperUtil.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\CollectionModel.cs" />
     <Compile Include="Models\ImageModel.cs" />
     <Compile Include="Models\PuzzleModel.cs" />
+    <Compile Include="Models\ScoreModel.cs" />
     <Compile Include="Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
@@ -857,6 +860,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="SQLite.UAP.2015, Version=3.8.11.1">
+      <Name>SQLite for Universal App Platform</Name>
+    </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
