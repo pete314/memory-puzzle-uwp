@@ -11,7 +11,10 @@ namespace memory_puzzle_uwp.ViewModels
 {
     public class MainViewModel : NotificationBase
     {
-        public MainViewModel() { }
+        DatabaseHelper db;
+        public MainViewModel() {
+            db = new DatabaseHelper();
+        }
 
         /// <summary>
         /// Load the available collections
@@ -33,6 +36,15 @@ namespace memory_puzzle_uwp.ViewModels
                     CollectionName = collection.Substring(collection.LastIndexOf('\\') + 1)
                 });
             }
+        }
+
+        /// <summary>
+        /// Load Best local scores
+        /// </summary>
+        /// <param name="scoresList"></param>
+        public void LoadBestLocalScores(ref ObservableCollection<ScoreModel> scoresList) {
+            IEnumerable<ScoreModel> localScores = db.QueryHighScore(25, true);
+            scoresList = new ObservableCollection<ScoreModel>(localScores);
         }
     }
 }

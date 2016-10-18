@@ -9,7 +9,7 @@ namespace memory_puzzle_uwp.Models
     public class PuzzleModel
     {
         //Hold the board width
-        private int boardSize = 6;
+        private int boardSize = 2;
         
         public int BoardSize
         {

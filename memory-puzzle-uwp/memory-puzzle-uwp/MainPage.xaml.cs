@@ -28,6 +28,7 @@ namespace memory_puzzle_uwp
     public sealed partial class MainPage : Page
     {
         ObservableCollection<CollectionModel> collectionList;
+        ObservableCollection<ScoreModel> scoreList;
         MainViewModel mainViewModel;
         public PuzzleModel puzzleModel { get; set; }
 
@@ -39,6 +40,11 @@ namespace memory_puzzle_uwp
             this.InitializeComponent();
             collectionList = new ObservableCollection<CollectionModel>();
             mainViewModel.LoadCollections(ref collectionList);
+
+            scoreList = new ObservableCollection<ScoreModel>();
+            mainViewModel.LoadBestLocalScores(ref scoreList);
+
+            ScoreCollectionList.Source = scoreList;
             CollectionList.Source = collectionList;
             checkUsername();
         }

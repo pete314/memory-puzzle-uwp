@@ -17,7 +17,6 @@ namespace memory_puzzle_uwp.Helpers
     public class DatabaseHelper : SQLiteConnection
     {
         const string DB_NAME = "mplocal.sqlite";
-
         public DatabaseHelper() : base(new SQLitePlatformWinRT(), Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, DB_NAME)) {
             CreateTable<ScoreModel>();
         }
@@ -27,12 +26,23 @@ namespace memory_puzzle_uwp.Helpers
         /// </summary>
         /// <param name="collectionName">The name to look for</param>
         /// <param name="limit">The amount results to return</param>
+        /// <param name="isLocal">Select local scores or remote</param>
         /// <returns></returns>
-        public IEnumerable<ScoreModel> QueryLocalScoreCollection(string collectionName, int limit)
+        public IEnumerable<ScoreModel> QueryLocalScoreCollection(string collectionName, int limit, bool isLocal)
         {
-            return Table<ScoreModel>().Where(x => x.Collection.Equals(collectionName)).Take(limit);
+            return Table<ScoreModel>().Where(x => x.Collection.Equals(collectionName) && x.IsLocal == isLocal).OrderBy(x => x.Score).Take(limit);
         }
 
+        /// <summary>
+        /// Query high scores
+        /// </summary>
+        /// <param name="limit">The number of results to return</param>
+        /// <param name="isLocal">Query local result only?</param>
+        /// <returns></returns>
+        public IEnumerable<ScoreModel> QueryHighScore(int limit, bool isLocal)
+        {
+            return Table<ScoreModel>().Where(x => x.IsLocal == isLocal).OrderByDescending(x => x.Score).Take(limit);
+        }
 
         /// <summary>
         /// Get all scores in score, collection name desc
@@ -43,7 +53,7 @@ namespace memory_puzzle_uwp.Helpers
                    orderby sm.Collection descending, sm.Score descending
                    select sm;
         }
-
+        
         /// <summary>
         /// Insert local score
         /// </summary>

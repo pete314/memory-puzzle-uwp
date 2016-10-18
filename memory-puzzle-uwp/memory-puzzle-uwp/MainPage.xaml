@@ -9,6 +9,7 @@
     mc:Ignorable="d">
 
     <Page.Resources>
+        <CollectionViewSource x:Name="ScoreCollectionList" />
         <CollectionViewSource x:Name="CollectionList" />
         <DataTemplate x:Name="GameCollectionGridViewTemplate" x:DataType="models:CollectionModel">
             <StackPanel x:Name="CollectionPanel"
@@ -54,6 +55,37 @@
                     </StackPanel>
                 </StackPanel><!-- End collection samples-->
             </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Name="ScoreCollectionGridViewTemplate" x:DataType="models:ScoreModel">
+            <Grid Width="500" Height="auto" VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0"
+                           x:Name="sUsernameTB" 
+                           Margin="15"
+                           Text="{x:Bind Username}"/>
+                <TextBlock Grid.Column="1" 
+                           x:Name="sCollectionTB" 
+                           Margin="15"
+                           Text="{x:Bind Collection}"/>
+                <TextBlock Grid.Column="2" 
+                           x:Name="sScoreTB" 
+                           Margin="15"
+                           Text="{x:Bind Score}"/>
+                <TextBlock Grid.Column="3" 
+                           x:Name="sTimeTB" 
+                           Margin="15"
+                           Text="{x:Bind TotalSeconds}"/>
+                <TextBlock Grid.Column="4" 
+                           x:Name="sDateTB" 
+                           Margin="15"
+                           Text="{x:Bind Created}"/>
+            </Grid>
         </DataTemplate>
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -118,6 +150,12 @@
                 <Button Tapped="Button_Tapped" Content="Start" Visibility="Visible" HorizontalAlignment="Center"/>
             </StackPanel>
             <!--End size selection-->
+            <TextBlock Text="Scores" FontFamily="Palatino Linotype" FontSize="18" FontWeight="Bold" FontStyle="Italic" />
+            
+            <GridView ItemsSource="{x:Bind ScoreCollectionList.View}"
+                  ItemTemplate="{StaticResource ScoreCollectionGridViewTemplate}"
+                  >
+            </GridView>
 
         </StackPanel>
         <local:TopNavMenu x:Name="TopNavMenu" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
