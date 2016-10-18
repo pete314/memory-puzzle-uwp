@@ -9,7 +9,8 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <CollectionViewSource x:Name="ScoreCollectionList" />
+        <CollectionViewSource x:Name="ScoreLocalCollectionList" />
+        <CollectionViewSource x:Name="ScoreRemoteCollectionList" />
         <CollectionViewSource x:Name="CollectionList" />
         <DataTemplate x:Name="GameCollectionGridViewTemplate" x:DataType="models:CollectionModel">
             <StackPanel x:Name="CollectionPanel"
@@ -150,9 +151,17 @@
                 <Button Tapped="Button_Tapped" Content="Start" Visibility="Visible" HorizontalAlignment="Center"/>
             </StackPanel>
             <!--End size selection-->
-            <TextBlock Text="Scores" FontFamily="Palatino Linotype" FontSize="18" FontWeight="Bold" FontStyle="Italic" />
-            
-            <GridView ItemsSource="{x:Bind ScoreCollectionList.View}"
+            <!-- Display the local high scores-->
+            <TextBlock Text="Local High Scores" FontFamily="Palatino Linotype" FontSize="18" FontWeight="Bold" FontStyle="Italic" />
+
+            <GridView ItemsSource="{x:Bind ScoreLocalCollectionList.View}"
+                  ItemTemplate="{StaticResource ScoreCollectionGridViewTemplate}"
+                  >
+            </GridView>
+            <!-- Display the remote high scores-->
+            <TextBlock Text="Remote High Scores" FontFamily="Palatino Linotype" FontSize="18" FontWeight="Bold" FontStyle="Italic" />
+
+            <GridView ItemsSource="{x:Bind ScoreRemoteCollectionList.View}"
                   ItemTemplate="{StaticResource ScoreCollectionGridViewTemplate}"
                   >
             </GridView>

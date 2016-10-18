@@ -39,12 +39,13 @@ namespace memory_puzzle_uwp.ViewModels
         }
 
         /// <summary>
-        /// Load Best local scores
+        /// Load Best scores
         /// </summary>
         /// <param name="scoresList"></param>
-        public void LoadBestLocalScores(ref ObservableCollection<ScoreModel> scoresList) {
-            IEnumerable<ScoreModel> localScores = db.QueryHighScore(25, true);
-            scoresList = new ObservableCollection<ScoreModel>(localScores);
+        /// <param name="isLocal"></param>
+        public void LoadBestScores(ref ObservableCollection<ScoreModel> scoresList, bool isLocal) {
+            IEnumerable<ScoreModel> scores = db.QueryHighScore(25, true);
+            scoresList = new ObservableCollection<ScoreModel>(scores);
         }
     }
 }
