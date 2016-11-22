@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Microsoft.WindowsAzure.MobileServices;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -17,6 +18,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace memory_puzzle_uwp
 {
+    
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>

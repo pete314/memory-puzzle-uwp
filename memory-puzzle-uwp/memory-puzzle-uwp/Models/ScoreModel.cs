@@ -73,12 +73,12 @@ namespace memory_puzzle_uwp.Models
         }
 
         //Holds the gameplay date
-        private DateTime created = DateTime.Now;
+        private DateTime createdAt = DateTime.Now;
 
         public DateTime Created
         {
-            get { return created; }
-            set { created = value; }
+            get { return createdAt; }
+            set { createdAt = value; }
         }
 
     }

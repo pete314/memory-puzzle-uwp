@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using memory_puzzle_uwp.Helpers;
 using memory_puzzle_uwp.Models;
+using Microsoft.WindowsAzure.MobileServices.Sync;
 
 namespace memory_puzzle_uwp.ViewModels
 {
@@ -47,5 +48,7 @@ namespace memory_puzzle_uwp.ViewModels
             IEnumerable<ScoreModel> scores = db.QueryHighScore(25, true);
             scoresList = new ObservableCollection<ScoreModel>(scores);
         }
+
+
     }
 }
