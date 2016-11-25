@@ -12,6 +12,7 @@ import (
 	"gopkg.in/mgo.v2/bson"
 	"time"
 	"encoding/json"
+	"github.com/go-macaron/binding"
 )
 
 const(
@@ -49,26 +50,26 @@ func main(){
 	m.Get("/score/:collection([\\w]+)", func(ctx *macaron.Context) string {
 		collection := (ctx.Params(":collection"))
 
-		results := findScores(db, collection)
+		results := findScores( db.DB(*dbname), collection)
+		response, _ := json.Marshal(results)
 
-		return json.Marshal(results)
+		return string(response);
 	})
 
 	//Score post endpoint
-	m.Post("/score", func(ctx *macaron.Context) string {
-		body := Score{}
-		json.Unmarshal(ctx.Req.Body().String(), body)
+	m.Post("/score", binding.Bind(Score{}), func(score Score) string {
+		result := storeScore(db.DB(*dbname), score)
 
-		result := storeScore(db, body)
+		response, _ := json.Marshal(struct{success bool}{result})
 
-		return json.Marshal(struct{success bool}{result})
+		return string(response)
 	})
 
 	m.Run()
 }
 
 //Create Score entry
-func storeScore(db *mgo.Database, res *Score) bool{
+func storeScore(db *mgo.Database, res Score) bool{
 	c := db.C(DB_COLLECTION)
 
 	if err := c.Insert(res); err == nil {

@@ -72,18 +72,6 @@
                        Style="{ThemeResource TitleTextBlockStyle}"
                            Text="{Binding Path=puzzleViewModel.Score}" />
 
-                <TextBlock Grid.Row="0" Grid.Column="2" Text="Time:" 
-                           HorizontalAlignment="Right"
-                       VerticalAlignment="Center"
-                       Style="{ThemeResource TitleTextBlockStyle}" FontWeight="Bold" />
-
-                <TextBlock x:Name="puzzleTime" Grid.Row="0" Grid.Column="3"
-                           HorizontalAlignment="Right"
-                           VerticalAlignment="Center"
-                           Style="{ThemeResource TitleTextBlockStyle}" 
-                           Margin="0,0,10,0"
-                           Text="{Binding Path=puzzleViewModel.Time}"/>
-                
             </Grid>
         </StackPanel>
         <GridView Margin="10,45" ItemsSource="{x:Bind ImageList.View}"

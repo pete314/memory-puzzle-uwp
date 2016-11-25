@@ -261,6 +261,18 @@ namespace memory_puzzle_uwp.Models
                 TotalSeconds = Int32.Parse(this.elapsedSecods),//the private variable does not contain +"sec", just the int
                 PuzzleSize = this.BoardSize
             });
+
+            //@todo: Should check the result
+            var result = Task.Run(async() => await RemoteDataHelper.StoreScore(
+                new ScoreModel()
+                {
+                    Score = Int32.Parse(this.Score),
+                    Collection = this.CollectionName,
+                    Username = null == SHelperUtil.GetLocalStorageValue("username") ? "Not set" : (string)SHelperUtil.GetLocalStorageValue("username"),
+                    TotalSeconds = Int32.Parse(this.elapsedSecods),//the private variable does not contain +"sec", just the int
+                    PuzzleSize = this.BoardSize
+                }
+            ));
         }
     }
 }

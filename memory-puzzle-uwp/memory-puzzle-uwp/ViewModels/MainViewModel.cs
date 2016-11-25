@@ -15,6 +15,11 @@ namespace memory_puzzle_uwp.ViewModels
         DatabaseHelper db;
         public MainViewModel() {
             db = new DatabaseHelper();
+            loadRemoteScores();
+        }
+
+        protected void loadRemoteScores() {
+            var result = Task.Run(async () => await RemoteDataHelper.GetScores());
         }
 
         /// <summary>
