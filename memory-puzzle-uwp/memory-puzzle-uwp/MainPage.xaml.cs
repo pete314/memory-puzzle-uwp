@@ -160,6 +160,8 @@ namespace memory_puzzle_uwp
             int size;
             if (Int32.TryParse(text, out size))
                 puzzleModel.BoardSize = size;
+
+            CustomPuzzleSizeIB.Text = "" + size; 
         }
 
         /// <summary>
