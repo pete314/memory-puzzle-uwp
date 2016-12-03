@@ -17,7 +17,7 @@ The application is broken into two part, the core game UWP and a RESTful API wri
 
 ##UWP Architecture
 The class relations in the project
-[Class relations](https://raw.githubusercontent.com/pete314/memory-puzzle-uwp/master/docs/img/memory_puzzle_class__relations.PNG?token=AIYB_GW-GssaUb-R7Fh3lKMPMrWg4EhGks5YTBuQwA%3D%3D)
+![Class relations](https://raw.githubusercontent.com/pete314/memory-puzzle-uwp/master/docs/img/memory_puzzle_class__relations.PNG?token=AIYB_GW-GssaUb-R7Fh3lKMPMrWg4EhGks5YTBuQwA%3D%3D "Memory puzzle class relations")
 
 
 ##Setting upo the project
